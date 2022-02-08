@@ -118,7 +118,60 @@
                         </div>
                         <div class="w-100 w-lg-50 pl-lg-4">
                             <p>
-                               Les stats de la BDD : 
+                                Vos plugins sont : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.getPlugins())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Votre "User Agent" est : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.getUserAgent())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Votre langue est : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.getLanguage())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Votre time zone est : <b>GMT
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.getTimeZone())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Vous utilisez le local storage : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.isLocalStorage())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Vous utilisez les cookies : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.isCookie())
+                                    </script>
+                                </b>
+                            </p>
+                            <p>
+                                Votre CPU est : <b>
+                                    <script type="text/javascript">
+                                        var client = new ClientJS();
+                                        document.write(client.getCPU())
+                                    </script>
+                                </b>
                             </p>
                         </div>
                     </div>
