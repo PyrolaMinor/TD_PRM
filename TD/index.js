@@ -6,6 +6,25 @@ const mysql = require('mysql');
 
 const app = express();
 const port = 3000;
+const levenshteinDistance = (s, t) => {
+  if (!s.length) return t.length;
+  if (!t.length) return s.length;
+  const arr = [];
+  for (let i = 0; i <= t.length; i++) {
+    arr[i] = [i];
+    for (let j = 1; j <= s.length; j++) {
+      arr[i][j] =
+        i === 0
+          ? j
+          : Math.min(
+              arr[i - 1][j] + 1,
+              arr[i][j - 1] + 1,
+              arr[i - 1][j - 1] + (s[j - 1] === t[i - 1] ? 0 : 1)
+            );
+    }
+  }
+  return arr[t.length][s.length];
+};
 
 const db = mysql.createConnection({
     database: "td2_prm",
@@ -43,15 +62,28 @@ app.post('/saveClientData', (req, res) => {
       if (err) throw err;
       console.log(results)
       console.log(results.length)
+      //Si on a un résultat :
       if(results.length != 0){
-        var nbPassage = parseInt(results[0].nbrePassage, 10)
-        var update = "UPDATE tad SET nbrePassage = "+ (nbPassage+1)+"  where code_client ='"+fingerprintHashed+"';";
-        db.query(update, function(err, results){
-          if (err) throw err;
-          console.log("J'ai bien update sa mère ! ");
-        });
+        //Distance de Levenshtein = 0 => ce sont les mêmes fingerprint.
+        var leven =levenshteinDistance(results[0].fingerprint, fingerprint);
+        if( leven == 0){
+          var nbPassage = parseInt(results[0].nbrePassage, 10)
+          var update = "UPDATE tad SET nbrePassage = "+ (nbPassage+1)+" where code_client ='"+fingerprintHashed+"';";
+          db.query(update, function(err, results){
+            if (err) throw err;
+            console.log("J'ai bien update sa mère ! ");  
+          });
+        //Distance de Levenshtein != 0 => c'est une collision.
+        }else{
+          var insertCollision = "INSERT INTO collision ('id','distance','fk_code_client') VALUES ('0','"+leven+"', '"+fingerprintHashed+"');"
+          db.query(insertCollision, function(err, results){
+            if (err) throw err;
+            console.log("J'ai bien insérer la collision! ");
+          });
+        }
+      //Si pas de résultat, on insert.
       }else{
-        var insert = "INSERT INTO `tad` (`code_client`, `fingerprint`, `horodatage`, `nbrePassage`) VALUES ('"+fingerprintHashed+"', '"+fingerprint+"', '"+new Date()+"', '"+1+"');";
+        var insert = "INSERT INTO `tad` (`code_client`, `fingerprint`, `nbrePassage`) VALUES ('"+fingerprintHashed+"', '"+fingerprint+"', '"+1+"');";
         db.query(insert, function(err, results){
           if (err) throw err;
           console.log("J'ai bien insérer ! ");
@@ -59,17 +91,66 @@ app.post('/saveClientData', (req, res) => {
       }
     });
     
-    
+    /*
     let savedData = [fingerprintHashed, fingerprint].join(",")+"\n";
 
     fs.appendFile('infos.txt', savedData, function (err) {
       if (err) throw err;
       console.log('Saved client data', req.body);
-    });
+    });*/
     res.sendStatus(200);
 
 });
 
+//Récupérer tous les fingerprints.
+app.get('/getAllFingerprints', (req, res) => {
+  var select = "SELECT * FROM tad;";
+  db.query(select, function(err, results){
+    if (err) throw err;
+    console.log("J'ai bien récupérer ! ");
+    res.send(results);
+  });
+});
+
+//Récupérer la somme du nombre de visites.
+app.get('/getNbVisites', (req, res) => {
+  var select = "SELECT SUM(nbrePassage) FROM tad;";
+  db.query(select, function(err, results){
+    if (err) throw err;
+    console.log("J'ai bien récupérer ! ");
+    res.send(results);
+  });
+});
+
+//Récupérer le nombre de fingerprint.
+app.get('/getNbFingerprint', (req, res) => {
+  var select = "SELECT COUNT(*) FROM tad;";
+  db.query(select, function(err, results){
+    if (err) throw err;
+    console.log("J'ai bien récupérer ! ");
+    res.send(results);
+  });
+});
+
+//Récupérer le nombre de collisions.
+app.get('/getNbCollision', (req, res) => {
+  var select = "SELECT COUNT(*) FROM collision;";
+  db.query(select, function(err, results){
+    if (err) throw err;
+    console.log("J'ai bien récupérer ! ");
+    res.send(results);
+  });
+});
+
+//Récupérer la moyenne des distances des collisions.
+app.get('/getMoyenneCollision', (req, res) => {
+  var select = "SELECT MOY(distance) FROM collision;";
+  db.query(select, function(err, results){
+    if (err) throw err;
+    console.log("J'ai bien récupérer ! ");
+    res.send(results);
+  });
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
