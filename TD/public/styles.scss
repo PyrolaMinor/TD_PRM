@@ -1,0 +1,366 @@
+$font-stack: Ubuntu, sans-serif;
+$primary-color: #539cd3;
+$secondary-color: #fff;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: $font-stack;
+}
+
+body {
+  list-style: none;
+  background-color: $secondary-color !important;
+}
+
+$sizes: 25, 50, 75, 100;
+@media (min-width: 992px) {
+  @each $size in $sizes {
+    .w-lg-#{$size} {
+      width: ($size)* 1% !important;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  @each $size in $sizes {
+    .w-md-#{$size} {
+      width: ($size)* 1% !important;
+    }
+  }
+}
+
+.text-color-sec {
+  color: $secondary-color !important;
+}
+
+.bold-title {
+  font-weight: 700;
+}
+
+.img-next {
+  margin-left: 10px;
+  transform: rotate(270deg);
+}
+
+.hero-header {
+  background-color: grey;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(83, 156, 211, 0.3), rgba(83, 156, 211, 1)),
+  url("assets/Hero-header.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+
+  .hero-title-container {
+    height: 83vh;
+    color: $secondary-color;
+    max-width: 60em;
+
+    .hero-title-h {
+      font-size: 5rem;
+      font-weight: 600;
+      @media (max-width: 992px) {
+        font-size: 3rem;
+      }
+      @media (max-width: 768px) {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+    }
+
+    .hero-title-p {
+      font-size: 1.5rem;
+      font-weight: 200;
+      @media (max-width: 992px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .nav-item-li {
+    margin-right: 2.5em;
+    font-weight: 700;
+  }
+
+  .follow-section {
+    font-size: 1.5em;
+
+    .follow-text {
+      color: $secondary-color;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .follow-section {
+    width: 30px;
+    position: absolute;
+    z-index: 100;
+    right: 3em;
+    bottom: 3em;
+
+    .follow-text {
+      writing-mode: vertical-rl;
+    }
+  }
+}
+
+.pres {
+  position: relative;
+
+  .pres-para {
+    background-color: $secondary-color;
+    border-radius: 0 1rem 1rem 0;
+    @media (max-width: 768px) {
+      border-radius: 0;
+    }
+
+    .pres-h5 {
+      font-size: 1rem;
+      color: $primary-color;
+    }
+
+    .pres-h2 {
+      font-size: 4rem;
+      font-weight: 500;
+      @media (max-width: 992px) {
+        font-size: 3rem;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .arrow-see-more {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: -25px;
+    text-align: center;
+    animation-name: example;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes example {
+    0% {
+    }
+    50% {
+      top: 1px;
+    }
+    100% {
+    }
+  }
+}
+
+.number-container {
+  width: 100%;
+  background-color: $primary-color;
+
+  .number-container-inner {
+    color: $secondary-color;
+
+    .number-text-h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .number-h1 {
+      font-size: 4.5rem;
+    }
+  }
+}
+
+.acti-container {
+  background-color: $secondary-color;
+  height: auto;
+
+  .acti-inner {
+    max-width: 30em;
+  }
+}
+
+.map-container {
+  width: auto;
+
+  .map-inner-lg {
+    height: 85vh;
+    position: relative;
+
+    .map-img {
+      background-image: url("assets/Interserction-img.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 1rem 0 0 1rem;
+      @media (max-width: 768px) {
+        border-radius: 0;
+      }
+
+      .map-text {
+        position: absolute;
+        bottom: 5rem;
+        left: 5rem;
+        color: $secondary-color;
+        z-index: 2;
+
+        .map-title {
+          font-size: 3.5em;
+          max-width: 10em;
+        }
+      }
+
+      .map-dot-art {
+        position: absolute;
+        right: 8em;
+        top: 7em;
+      }
+    }
+  }
+
+  .map-shrink {
+    .map-img-shrink {
+      background-image: url("assets/Interserction-img.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      .map-font-lt {
+        font-size: 1.3rem;
+      }
+
+      .map-font-lg {
+        font-size: 2rem;
+        border-bottom: 2px solid $secondary-color;
+      }
+    }
+  }
+}
+
+.masonry-right-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-image: url("assets/Friend-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 250px;
+  @media (max-width: 768px) {
+    min-height: 100px;
+  }
+
+  .masonry-right-1-text {
+    text-align: center;
+    font-size: 2em;
+  }
+}
+
+.masonry-right-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-image: url("assets/Work-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 250px;
+  @media (max-width: 768px) {
+    min-height: 100px;
+  }
+
+  .masonry-right-2-text {
+    text-align: center;
+    font-size: 2em;
+  }
+}
+
+.carousel-container {
+  background: #f3f8fc;
+
+  .carousel-text {
+    width: 85%;
+    max-width: 450px;
+  }
+
+  .cont {
+    position: relative;
+  }
+
+  .img {
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .cont:hover .img {
+    opacity: 1;
+  }
+
+  .cont:hover .middle {
+    opacity: 1;
+  }
+
+  .text {
+    padding: 16px 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-multi-item-2 .col-md-3 {
+    float: left;
+    width: 50%;
+    max-width: 100%;
+  }
+}
+
+.carousel-multi-item-2 .card img {
+  border-radius: 2px;
+}
+
+.footer-class {
+  background-image: url("assets/Footer-background.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .footer-contain-main {
+    margin-top: 10em;
+    margin-bottom: 10em;
+
+    .footer-title {
+      font-size: 4rem;
+      color: $secondary-color;
+      @media (max-width: 992px) {
+        font-size: 3rem;
+      }
+      @media (max-width: 768px) {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+    }
+
+    .footer-input {
+      height: 70px;
+    }
+
+    .footer-input-button {
+      width: 70px;
+      border-color: $primary-color;
+      background-color: $primary-color;
+      color: $secondary-color;
+    }
+  }
+}
+

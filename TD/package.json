@@ -1,0 +1,16 @@
+{
+  "name": "td_prm",
+  "version": "1.0.0",
+  "description": "TD PRM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Equipe 5",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "clientjs": "^0.2.1",
+    "express": "^4.17.2"
+  }
+}
