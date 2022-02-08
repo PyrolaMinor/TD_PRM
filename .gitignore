@@ -1,0 +1,4 @@
+./TD/node_modules/*
+./.idea/*
+./TD/package.json
+./TD/package-lock.json
