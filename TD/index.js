@@ -2,9 +2,16 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const path = require('path');
 const fs = require('fs');
+const mysql = require('mysql');
 
 const app = express();
 const port = 3000;
+
+const db = mysql.createConnection({
+    host : "localhost",
+    user: "root",
+    password: "root"
+});
 
 // Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +28,10 @@ app.get('/', (req, res) => {
 
 // POST client data to file
 app.post('/saveClientData', (req, res) => {
+    db.connect(function(err) {
+        if (err) throw err;
+        console.log("Connecté à la base de données MySql!");
+    });
     let fingerprintHashed = req.body.fingerprintHashed;
     let fingerprint = req.body.fingerprint;
 
